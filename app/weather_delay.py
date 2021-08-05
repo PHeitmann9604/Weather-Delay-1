@@ -57,7 +57,7 @@ parsed_response_status = json.loads(response_status.text)
 # print(type(response_status)) #> <class 'requests.models.Response'>
 # print(response_status.status_code) #> 200
 # print(response_status.text) #>[{"greatCircleDistance":{"meter":345185.09,"km":345.185,"mile":214.488,"nm":186.385,"feet":1132497.0},"departure":{"airport":{"icao":"KATL","iata":"ATL","name":"Atlanta, Hartsfield Jackson Atlanta","shortName":"Hartsfield Jackson","municipalityName":"Atlanta","location":{"lat":33.6367,"lon":-84.4281},"countryCode":"US"},"scheduledTimeLocal":"2021-08-04 23:35-04:00","actualTimeLocal":"2021-08-04 23:44-04:00","runwayTimeLocal":"2021-08-04 23:44-04:00","scheduledTimeUtc":"2021-08-05 03:35Z","actualTimeUtc":"2021-08-05 03:44Z","runwayTimeUtc":"2021-08-05 03:44Z","terminal":"S","runway":"08R","quality":["Basic","Live"]},"arrival":{"airport":{"icao":"KSAV","iata":"SAV","name":"Savannah, Savannah Hilton Head","shortName":"Hilton Head","municipalityName":"Savannah","location":{"lat":32.1276,"lon":-81.2021},"countryCode":"US"},"scheduledTimeLocal":"2021-08-05 00:38-04:00","actualTimeLocal":"2021-08-05 00:21-04:00","scheduledTimeUtc":"2021-08-05 04:38Z","actualTimeUtc":"2021-08-05 04:21Z","quality":["Basic","Live"]},"lastUpdatedUtc":"2021-08-05 03:48Z","number":"DL 1110","callSign":"DAL1110","status":"EnRoute","codeshareStatus":"IsOperator","isCargo":false,"aircraft":{"reg":"N339NW","modeS":"A3B87F","model":"Airbus A320-100/200"},"airline":{"name":"Delta Air Lines"}}]
-# pprint(parsed_response_status)
+pprint(parsed_response_status)
 # print(parsed_response_status.keys())
 
 
