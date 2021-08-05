@@ -6,13 +6,13 @@ import json
 import os
 from dotenv import load_dotenv
 
-# api_key = os.environ.get("api_key")
-api_key = "bd4835e76amsh64eed19c3572ba7p146087jsn8985df88bde8"
-flight_number = input("please enter your flight number, two letters followed by numbers:")
+load_dotenv()
+
+api_key = os.getenv("api_key")
 
 # ANALYZING DELAYS BY FLIGHT NUMBER
 
-# flight_number = input("Please input a flight number (e.g. 'DL4420'): ")
+flight_number = input("please enter your flight number, two letters followed by numbers:")
 delay_url = f"https://aerodatabox.p.rapidapi.com/flights/{flight_number}/delays"
 
 headers = {
@@ -32,7 +32,6 @@ parsed_response_delay = json.loads(response_delay.text)
 # print(parsed_response_delay.keys())
 
 # ANALYZE THE DATA
-
 anticipated_delay_destination = parsed_response_delay['destinations']
 anticipated_delay_origin = parsed_response_delay['origins']
 print("For your destination the anticipated delay is: ", anticipated_delay_destination)
