@@ -37,8 +37,8 @@ parsed_response_delay = json.loads(response_delay.text)
 # ANALYZE THE DATA
 anticipated_delay_destination = parsed_response_delay['destinations']
 anticipated_delay_origin = parsed_response_delay['origins']
-print("For your destination the anticipated delay is: ", anticipated_delay_destination)
-print("For your starting airport the anticipated delay is: ", anticipated_delay_origin)
+print("For your destination the anticipated delay is: ", anticipated_delay_destination[0]["medianDelay"])
+print("For your starting airport the anticipated delay is: ", anticipated_delay_destination[0]["medianDelay"])
 # TO DO:  PULL JUST THE FINAL VALUE NOT THE WHOLE RESPONSE
 
 
@@ -62,5 +62,3 @@ parsed_response_status = json.loads(response_status.text)
 # pprint(parsed_response_status)
 # print(parsed_response_status.keys())
 print(parsed_response_status[0]['status'])
-
-# TO DO: TRANSFORM THE LIST OF DICTIONARIES
