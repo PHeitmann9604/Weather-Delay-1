@@ -1,6 +1,6 @@
-# this is the "requirements.txt" file
-# it might be helpful to use pandas. if you do, uncomment the last line below ...
+# This is the "requirements.txt" file for the weather_delay app
 
 requests
 python-dotenv
 pandas
+pytest
