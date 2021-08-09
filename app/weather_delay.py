@@ -6,6 +6,7 @@ import json
 import os
 from dotenv import load_dotenv
 import operator
+import datetime
 
 if __name__ == "__main__":
     pass
@@ -36,13 +37,13 @@ if __name__ == "__main__":
     # print(parsed_response_delay.keys())
 
     # breakpoint ()
-
     # ANALYZE THE DATA
     anticipated_delay_destination = parsed_response_delay['destinations']
     anticipated_delay_origin = parsed_response_delay['origins']
     print("For your destination the anticipated delay is: ", anticipated_delay_destination[0]["medianDelay"])
-    print("For your starting airport the anticipated delay is: ", anticipated_delay_destination[0]["medianDelay"])
+    print("For your starting airport the anticipated delay is: ", anticipated_delay_origin[0]["medianDelay"])
     # TO DO:  PULL JUST THE FINAL VALUE NOT THE WHOLE RESPONSE
+
 
 
     # ANALYZING STATUS BY FLIGHT NUMBER AND FLIGHT DATE
