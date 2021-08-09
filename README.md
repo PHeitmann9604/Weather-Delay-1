@@ -8,8 +8,9 @@ To use this application, you will need:
   + Anaconda 3.7+
   + Python 3.7+
   + Pip
+  + Pytest
 
-## INSTALLATION
+## Installation
 Fork this repository from Github (https://github.com/PHeitmann9604/Weather-Delay-1) and then clone to use under your own control.
 
 Once the product information is set, navigate to the project repository from the command line.
@@ -44,11 +45,21 @@ In addition, if you would like to send email updates of anticipated delays and f
     SENDGRID_API_KEY = "your api key should be filled in here"
     SENDER_ADDRESS = this will be the single sender verified in sendgrid
 
- ## USAGE
- Run the Python program:
+## Testing
+
+Run Pytest:
+
+```pytest
+
+Confirm that all tests pass, or investigate and troubleshoot any errors that are thrown until all tests pass.
+
+## Usage
+Run the Python program:
 
  ```py
  python app/weather_delay.py
  ```
- ## CONTACT
+
+ ## Contact
+
 If you have any questions about this program, please contact Patrick at pjh9604@stern.nyu.edu  or  Claire at cec9702@stern.nyu.edu.
