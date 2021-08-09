@@ -8,8 +8,9 @@ To use this application, you will need:
   + Anaconda 3.7+
   + Python 3.7+
   + Pip
+  + Pytest
 
-## INSTALLATION
+## Installation
 Fork this repository from Github (https://github.com/PHeitmann9604/Weather-Delay-1) and then clone to use under your own control.
 
 Once the product information is set, navigate to the project repository from the command line.
@@ -39,11 +40,13 @@ Create a ".env" file in the root directory of your local repository. You will ne
 
 NOTE - utilization of this API is only free with the Basic plan. Should you wish to make a significant number of data calls or use for commercial purposes, you will need to pay for a higher tier of access.
 
- ## USAGE
+ ## Testing
+
+ ## Usage
  Run the Python program:
 
  ```py
  python app/weather_delay.py
  ```
- ## CONTACT
+ ## Contact
 If you have any questions about this program, please contact Patrick at pjh9604@stern.nyu.edu  or  Claire at cec9702@stern.nyu.edu.
