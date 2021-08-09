@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import operator
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-
+import re
 
 if __name__ == "__main__":
     pass
@@ -41,14 +41,14 @@ if __name__ == "__main__":
         # breakpoint ()
         # ANALYZE THE DATA
         anticipated_delay_destination = parsed_response_delay["destinations"]
-        median_delay_destination = anticipated_delay_destination[0]["medianDelay"]
+        median_delay_destination = re.split('[-:]', anticipated_delay_destination[0]["medianDelay"])
         anticipated_delay_origin = parsed_response_delay["origins"]
-        median_delay_origin = anticipated_delay_origin[0]["medianDelay"]
+        median_delay_origin = re.split('[-:]', anticipated_delay_origin[0]["medianDelay"])
     except:
         print("Sorry, invalid flight number. Please input correct flight number")
         exit()
-    print("For your destination the anticipated delay is: ", median_delay_destination)
-    print("For your starting airport the anticipated delay is: ", median_delay_origin)
+    print("For your destination the anticipated delay is: ", median_delay_destination[-3], "hours and ", median_delay_destination[-2], "minutes")
+    print("For your starting airport the anticipated delay is: ", median_delay_origin[-3], "hours and ", median_delay_origin[-2], "minutes")
     # TO DO:  PULL JUST THE FINAL VALUE NOT THE WHOLE RESPONSE
 
 
