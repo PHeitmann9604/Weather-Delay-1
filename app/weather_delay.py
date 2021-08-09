@@ -77,7 +77,9 @@ if __name__ == "__main__":
     # pprint(parsed_response_status)
     # print(parsed_response_status.keys())
     flight_status = parsed_response_status[0]['status']
-    print(flight_status)
+    departure_airport = parsed_response_status[0]['departure']['airport']['name']
+    arrival_airport = parsed_response_status[0]['arrival']['airport']['name']
+    print("Your flight from", departure_airport, "to", arrival_airport, "is currently", flight_status)
 
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", default="OOPS, please set env var called 'SENDGRID_API_KEY'")
 SENDER_ADDRESS = os.getenv("SENDER_ADDRESS", default="OOPS, please set env var called 'SENDER_ADDRESS'")
@@ -86,7 +88,7 @@ client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGr
 
 subject = "Your Flight Delay and Status Update"
 
-html_content = f"Your anticipated destination airport delay is: {median_delay_destination} and starting airport anticipated delay is: {median_delay_origin}. Your current flight status is: {flight_status}"
+html_content = f"Your anticipated destination airport delay is: {median_delay_destination} and starting airport anticipated delay is: {median_delay_origin}. Your flight from {departure_airport} to {arrival_airport} is: {flight_status}"
 email_response = input("Do you wish to have an email summary sent? (Yes/No):")
 if email_response == "Yes":
     receiver_email_address = input("Please input the email address where you would like to receive updates: ")
