@@ -83,24 +83,18 @@ SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", default="OOPS, please set env v
 SENDER_ADDRESS = os.getenv("SENDER_ADDRESS", default="OOPS, please set env var called 'SENDER_ADDRESS'")
 
 client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
-print("CLIENT:", type(client))
 
 subject = "Your Flight Delay and Status Update"
 
-html_content = f"For your destination the anticipated delay is: {median_delay_destination} and your starting airport the anticipated delay is: {median_delay_origin}. Your flight status is currently: {flight_status}"
-print("HTML:", html_content)
+html_content = f"Your anticipated destination airport delay is: {median_delay_destination} and starting airport anticipated delay is: {median_delay_origin}. Your current flight status is: {flight_status}"
 email_response = input("Do you wish to have an email summary sent? (Yes/No):")
 if email_response == "Yes":
     receiver_email_address = input("Please input the email address where you would like to receive updates: ")
     message = Mail(from_email=SENDER_ADDRESS, to_emails=receiver_email_address, subject=subject, html_content=html_content)
     try:
         response = client.send(message)
-
-        print("RESPONSE:", type(response)) #> <class 'python_http_client.client.Response'>
         print(response.status_code) #> 202 indicates SUCCESS
-        print(response.body)
-        print(response.headers)
-
+        
     except Exception as err:
         print(type(err))
         print(err)

@@ -39,6 +39,11 @@ Create a ".env" file in the root directory of your local repository. You will ne
 
 NOTE - utilization of this API is only free with the Basic plan. Should you wish to make a significant number of data calls or use for commercial purposes, you will need to pay for a higher tier of access.
 
+In addition, if you would like to send email updates of anticipated delays and flight status, the sendgrid (https://sendgrid.com/) service will be utilized. Please verify a single sender user and obtain an API key. Once these have been obtained, fill in the following items in the ".env" file
+
+    SENDGRID_API_KEY = "your api key should be filled in here"
+    SENDER_ADDRESS = this will be the single sender verified in sendgrid
+
  ## USAGE
  Run the Python program:
 
