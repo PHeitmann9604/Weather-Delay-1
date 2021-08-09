@@ -6,6 +6,9 @@ import json
 import os
 from dotenv import load_dotenv
 import operator
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 
 if __name__ == "__main__":
     pass
@@ -38,12 +41,14 @@ if __name__ == "__main__":
         # breakpoint ()
         # ANALYZE THE DATA
         anticipated_delay_destination = parsed_response_delay["destinations"]
+        median_delay_destination = anticipated_delay_destination[0]["medianDelay"]
         anticipated_delay_origin = parsed_response_delay["origins"]
+        median_delay_origin = anticipated_delay_origin[0]["medianDelay"]
     except:
         print("Sorry, invalid flight number. Please input correct flight number")
         exit()
-    print("For your destination the anticipated delay is: ", anticipated_delay_destination[0]["medianDelay"])
-    print("For your starting airport the anticipated delay is: ", anticipated_delay_origin[0]["medianDelay"])
+    print("For your destination the anticipated delay is: ", median_delay_destination)
+    print("For your starting airport the anticipated delay is: ", median_delay_origin)
     # TO DO:  PULL JUST THE FINAL VALUE NOT THE WHOLE RESPONSE
 
 
@@ -71,4 +76,34 @@ if __name__ == "__main__":
     # print(response_status.text) #>[{"greatCircleDistance":{"meter":345185.09,"km":345.185,"mile":214.488,"nm":186.385,"feet":1132497.0},"departure":{"airport":{"icao":"KATL","iata":"ATL","name":"Atlanta, Hartsfield Jackson Atlanta","shortName":"Hartsfield Jackson","municipalityName":"Atlanta","location":{"lat":33.6367,"lon":-84.4281},"countryCode":"US"},"scheduledTimeLocal":"2021-08-04 23:35-04:00","actualTimeLocal":"2021-08-04 23:44-04:00","runwayTimeLocal":"2021-08-04 23:44-04:00","scheduledTimeUtc":"2021-08-05 03:35Z","actualTimeUtc":"2021-08-05 03:44Z","runwayTimeUtc":"2021-08-05 03:44Z","terminal":"S","runway":"08R","quality":["Basic","Live"]},"arrival":{"airport":{"icao":"KSAV","iata":"SAV","name":"Savannah, Savannah Hilton Head","shortName":"Hilton Head","municipalityName":"Savannah","location":{"lat":32.1276,"lon":-81.2021},"countryCode":"US"},"scheduledTimeLocal":"2021-08-05 00:38-04:00","actualTimeLocal":"2021-08-05 00:21-04:00","scheduledTimeUtc":"2021-08-05 04:38Z","actualTimeUtc":"2021-08-05 04:21Z","quality":["Basic","Live"]},"lastUpdatedUtc":"2021-08-05 03:48Z","number":"DL 1110","callSign":"DAL1110","status":"EnRoute","codeshareStatus":"IsOperator","isCargo":false,"aircraft":{"reg":"N339NW","modeS":"A3B87F","model":"Airbus A320-100/200"},"airline":{"name":"Delta Air Lines"}}]
     # pprint(parsed_response_status)
     # print(parsed_response_status.keys())
-    print(parsed_response_status[0]['status'])
+    flight_status = parsed_response_status[0]['status']
+    print(flight_status)
+
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", default="OOPS, please set env var called 'SENDGRID_API_KEY'")
+SENDER_ADDRESS = os.getenv("SENDER_ADDRESS", default="OOPS, please set env var called 'SENDER_ADDRESS'")
+
+client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
+print("CLIENT:", type(client))
+
+subject = "Your Flight Delay and Status Update"
+
+html_content = f"For your destination the anticipated delay is: {median_delay_destination} and your starting airport the anticipated delay is: {median_delay_origin}. Your flight status is currently: {flight_status}"
+print("HTML:", html_content)
+email_response = input("Do you wish to have an email summary sent? (Yes/No):")
+if email_response == "Yes":
+    receiver_email_address = input("Please input the email address where you would like to receive updates: ")
+    message = Mail(from_email=SENDER_ADDRESS, to_emails=receiver_email_address, subject=subject, html_content=html_content)
+    try:
+        response = client.send(message)
+
+        print("RESPONSE:", type(response)) #> <class 'python_http_client.client.Response'>
+        print(response.status_code) #> 202 indicates SUCCESS
+        print(response.body)
+        print(response.headers)
+
+    except Exception as err:
+        print(type(err))
+        print(err)
+
+
+
