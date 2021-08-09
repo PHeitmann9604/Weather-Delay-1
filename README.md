@@ -42,6 +42,12 @@ NOTE - utilization of this API is only free with the Basic plan. Should you wish
 
  ## Testing
 
+Run Pytest:
+
+```pytest
+
+Confirm that all tests pass, or investigate and troubleshoot any errors that are thrown until all tests pass.
+
  ## Usage
  Run the Python program:
 
