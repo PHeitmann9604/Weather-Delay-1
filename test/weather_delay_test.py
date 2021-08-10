@@ -35,23 +35,3 @@ def test_departure_flightnumber_equals_DL1110():
 def test_get_flightDL1110_current_status_equals_200():
     response = requests.request("GET", "https://aerodatabox.p.rapidapi.com/flights/DL1110/2021-08-09", headers=headers)
     assert response.status_code == 200
-
-# Testing that environment variables are working properly
-# https://tech.serhatteker.com/post/2020-02/test-env-vars-in-python/
-
-def get_key():
-    key = os.getenv("api_key")
-
-    if key is None:
-        raise OSError("API key is not set.")
-
-# def get_secret():
-   # """Simple retrieval function.
-   # Returns SECRET or raises OSError.
-   # """
-   # secret = os.getenv('SECRET', default=None)
-
-   # if secret is None:
-     #   raise OSError("SECRET environment is not set.")
-
-    # return secret
