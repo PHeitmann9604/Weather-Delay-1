@@ -46,7 +46,7 @@ if __name__ == "__main__":
         anticipated_delay_origin = parsed_response_delay["origins"]
         median_delay_origin = re.split('[-:]', anticipated_delay_origin[0]["medianDelay"])
     except:
-        print("Sorry, invalid flight number. Please input correct flight number")
+        print("Sorry, invalid flight number. Please run the program again and input a valid flight number")
         exit()
     print("For your destination the anticipated delay is: ", median_delay_destination[-3], "hours and ", median_delay_destination[-2], "minutes")
     print("For your starting airport the anticipated delay is: ", median_delay_origin[-3], "hours and ", median_delay_origin[-2], "minutes")
@@ -80,12 +80,16 @@ if __name__ == "__main__":
     flight_status = parsed_response_status[0]['status']
     departure_airport = parsed_response_status[0]['departure']['airport']['name']
     departure_time = parsed_response_status[0]['departure']['scheduledTimeLocal']
+    dt = datetime.datetime.fromisoformat(departure_time)
+    format_dt = datetime.datetime.strftime(dt, "%H:%M%p on %B %d, %Y")
     arrival_airport = parsed_response_status[0]['arrival']['airport']['name']
     arrival_time = parsed_response_status[0]['arrival']['scheduledTimeLocal']
+    at = datetime.datetime.fromisoformat(arrival_time)
+    format_at = datetime.datetime.strftime(at, "%H:%M%p on %B %d, %Y")
     if flight_status == "Unknown":
-        print("Your flight from", departure_airport, "to", arrival_airport, "is scheduled to depart at:", departure_time)
+        print("Your flight from", departure_airport, "to", arrival_airport, "is scheduled to depart at:", format_dt)
     elif flight_status == "Arrived":
-        print("Your flight from", departure_airport, "to", arrival_airport, "is arrived at:", departure_time)
+        print("Your flight from", departure_airport, "to", arrival_airport, "arrived at:", format_at)
     else: 
         print("Your flight from", departure_airport, "to", arrival_airport, "is", flight_status)
 
@@ -96,7 +100,7 @@ client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGr
 
 subject = "Your Flight Delay and Status Update"
 
-html_content = f"Your anticipated {arrival_airport} delay is: {median_delay_destination[-3]} hours and {median_delay_destination[-2]} minutes and {departure_airport} airport anticipated delay is: {median_delay_origin[-3]} hours and {median_delay_origin[-2]} minutes. Your flight from {departure_airport} to {arrival_airport} is: {flight_status}"
+html_content = f"Your anticipated {arrival_airport} delay is: {median_delay_destination[-3]} hours and {median_delay_destination[-2]} minutes and {departure_airport} airport anticipated delay is: {median_delay_origin[-3]} hours and {median_delay_origin[-2]} minutes. Current status from {departure_airport} to {arrival_airport}: {flight_status}"
 email_response = input("Do you wish to have an email summary sent? (Yes/No):")
 if email_response == "Yes":
     receiver_email_address = input("Please input the email address where you would like to receive updates: ")
