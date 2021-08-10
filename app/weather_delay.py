@@ -9,6 +9,7 @@ import operator
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 import re
+import datetime
 
 if __name__ == "__main__":
     pass
@@ -78,8 +79,15 @@ if __name__ == "__main__":
     # print(parsed_response_status.keys())
     flight_status = parsed_response_status[0]['status']
     departure_airport = parsed_response_status[0]['departure']['airport']['name']
+    departure_time = parsed_response_status[0]['departure']['scheduledTimeLocal']
     arrival_airport = parsed_response_status[0]['arrival']['airport']['name']
-    print("Your flight from", departure_airport, "to", arrival_airport, "is currently", flight_status)
+    arrival_time = parsed_response_status[0]['arrival']['scheduledTimeLocal']
+    if flight_status == "Unknown":
+        print("Your flight from", departure_airport, "to", arrival_airport, "is scheduled to depart at:", departure_time)
+    elif flight_status == "Arrived":
+        print("Your flight from", departure_airport, "to", arrival_airport, "is arrived at:", departure_time)
+    else: 
+        print("Your flight from", departure_airport, "to", arrival_airport, "is", flight_status)
 
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", default="OOPS, please set env var called 'SENDGRID_API_KEY'")
 SENDER_ADDRESS = os.getenv("SENDER_ADDRESS", default="OOPS, please set env var called 'SENDER_ADDRESS'")
@@ -88,18 +96,19 @@ client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGr
 
 subject = "Your Flight Delay and Status Update"
 
-html_content = f"Your anticipated {arrival_airport} delay is: {median_delay_destination} and {departure_airport} airport anticipated delay is: {median_delay_origin}. Your flight from {departure_airport} to {arrival_airport} is: {flight_status}"
+html_content = f"Your anticipated {arrival_airport} delay is: {median_delay_destination[-3]} hours and {median_delay_destination[-2]} minutes and {departure_airport} airport anticipated delay is: {median_delay_origin[-3]} hours and {median_delay_origin[-2]} minutes. Your flight from {departure_airport} to {arrival_airport} is: {flight_status}"
 email_response = input("Do you wish to have an email summary sent? (Yes/No):")
 if email_response == "Yes":
     receiver_email_address = input("Please input the email address where you would like to receive updates: ")
     message = Mail(from_email=SENDER_ADDRESS, to_emails=receiver_email_address, subject=subject, html_content=html_content)
     try:
         response = client.send(message)
-        print(response.status_code) #> 202 indicates SUCCESS
-        
+        print(response.status_code)#> 202 indicates SUCCESS
+        print("Great, you will receive an email shortly. Have a safe trip!")
     except Exception as err:
         print(type(err))
         print(err)
-
+else: 
+    print("Thank you. Have a safe trip!")
 
 
