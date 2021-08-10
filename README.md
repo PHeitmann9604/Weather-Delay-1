@@ -50,6 +50,7 @@ In addition, if you would like to send email updates of anticipated delays and f
 Run Pytest:
 
 ```pytest
+```
 
 Confirm that all tests pass, or investigate and troubleshoot any errors that are thrown until all tests pass. To automate testing, integrate with a program like Travis CI, by adding a .travis.yml file to the root directory of the repository.
 
