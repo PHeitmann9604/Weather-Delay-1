@@ -45,15 +45,13 @@ In addition, if you would like to send email updates of anticipated delays and f
     SENDGRID_API_KEY = "your api key should be filled in here"
     SENDER_ADDRESS = this will be the single sender verified in sendgrid
 
-## Testing
+## Testing and Usage
 
 Run Pytest:
 
 ```pytest
 
-Confirm that all tests pass, or investigate and troubleshoot any errors that are thrown until all tests pass.
-
-## Usage
+Confirm that all tests pass, or investigate and troubleshoot any errors that are thrown until all tests pass. To automate testing, integrate with a program like Travis CI, by adding a .travis.yml file to the root directory of the repository.
 
 Run the Python program:
 
