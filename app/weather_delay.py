@@ -108,7 +108,7 @@ client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGr
 
 subject = "Your Flight Delay and Status Update"
 
-html_content = f"Your anticipated {arrival_airport} delay is: {median_delay_destination[-3]} hours and {median_delay_destination[-2]} minutes and {departure_airport} airport anticipated delay is: {median_delay_origin[-3]} hours and {median_delay_origin[-2]} minutes. Current status from {departure_airport} to {arrival_airport}: {email_flight_status}"
+html_content = f"The anticipated {arrival_airport} delay is: {median_delay_destination[-3]} hours and {median_delay_destination[-2]} minutes and {departure_airport} anticipated delay is: {median_delay_origin[-3]} hours and {median_delay_origin[-2]} minutes. {email_flight_status}"
 email_response = input("Do you wish to have an email summary sent? (Yes/No):")
 if email_response == "Yes":
     receiver_email_address = input("Please input the email address where you would like to receive updates: ")
